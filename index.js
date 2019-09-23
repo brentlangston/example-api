@@ -5,7 +5,7 @@ const msg = process.env.msg || 'Hello From your example API';
 
 app.set('port', (process.env.PORT || 8000));
 
-app.get('/', function(request, response) {
+app.get('*', function(request, response) {
   response.send(`${msg}`);
 });
 
