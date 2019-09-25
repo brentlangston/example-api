@@ -18,7 +18,7 @@ phases:
       - echo $IMAGE_TAG > code_hash.txt
       - docker tag examp-examp-ew0c2u1ne7ai:latest 048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-ew0c2u1ne7ai:${IMAGE_TAG}
       - docker tag examp-examp-ew0c2u1ne7ai:latest 048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-ew0c2u1ne7ai:latest
-      - docker push 048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-ew0c2u1ne7ai:{IMAGE_TAG}
+      - docker push 048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-ew0c2u1ne7ai:${IMAGE_TAG}
       - docker push 048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-ew0c2u1ne7ai:latest
 
 artifacts:
