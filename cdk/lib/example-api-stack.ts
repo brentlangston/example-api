@@ -19,11 +19,11 @@ export class CFStack extends cdk.Stack {
     // Source
     const source = new Source(this, 'source', {githubRepo, pipeline});
 
-    // Test
-    const test = new CodeBuild(this, 'test', {
+    // Build
+    const build = new CodeBuild(this, 'build', {
       pipeline,
       input: source.output,
-      buildSpec: BuildSpec.fromSourceFilename('test-buildspec.yaml'),
+      buildSpec: BuildSpec.fromSourceFilename('build-buildspec.yaml'),
       cache: Cache.local(LocalCacheMode.DOCKER_LAYER),
       priveleged: true,
     });
