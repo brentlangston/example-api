@@ -30,8 +30,6 @@ phases:
       - echo '***** Pushing Image:'
       - docker push ${REPOSITORY_URI:${IMAGE_TAG}
       - docker push ${REPOSITORY_URI:latest
-  post_build:
-    commands:
       - printf '[{"name":"example-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo $IMAGE_TAG > code_hash.txt
       - cd $HOME/eks-gitops
@@ -41,7 +39,8 @@ phases:
       - git add .
       - git commit -a -m "Updating deployment to $IMAGE_TAG tag"
       - git push
-
+  post_build:
+    commands:
 artifacts:
   files:
     - '**/*'
