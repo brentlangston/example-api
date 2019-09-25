@@ -34,7 +34,6 @@ phases:
       - echo $IMAGE_TAG > code_hash.txt
       - pwd
       - ls
-      - # cd $HOME/eks-gitops
       - sed -i "s/image: .*/image: $REPOSITORY_URI:$IMAGE_TAG/" magic/development/yellow-api/deployment.yaml 
       - sed -i "s/image: .*/image: $REPOSITORY_URI:$IMAGE_TAG/" magic/development/blue-api/deployment.yaml 
       - sed -i "s/image: .*/image: $REPOSITORY_URI:$IMAGE_TAG/" magic/development/pink-api/deployment.yaml
