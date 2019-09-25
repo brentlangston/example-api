@@ -28,15 +28,10 @@ export class CFStack extends cdk.Stack {
       priveleged: true,
     });
 
-    // Deploy
-    const deploy = new CodeBuild(this, 'deploy', {
-      pipeline,
-      input: source.output,
-      buildSpec: BuildSpec.fromSourceFilename('deploy-buildspec.yaml'),
-    });
-
   }
 }
+
+
 
 function getParameterARN(parameter: String) {
   return `arn:${cdk.Aws.PARTITION}:ssm:${cdk.Aws.REGION}:${
@@ -49,3 +44,5 @@ function addParameterPermissions(codeBuild: CodeBuild, secretsARN: string) {
     resources: [secretsARN]
   }));
 }
+
+
