@@ -34,15 +34,15 @@ phases:
       - docker push ${REPOSITORY_URI}:latest
       - printf '[{"name":"example-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo $IMAGE_TAG > code_hash.txt
+      - cd $HOME/eks-gitops/
       - pwd
       - ls
       - oldtag=$(cat magic/development/yellow-api/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
-      - sed -i "s/${oldtag}/${IMAGE_TAG}/" $HOME/eks-gitops/magic/development/yellow-api/deployment.yaml 
+      - sed -i "s/${oldtag}/${IMAGE_TAG}/" magic/development/yellow-api/deployment.yaml 
       - oldtag=$(cat magic/development/blue-api/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
-      - sed -i "s/${oldtag}/${IMAGE_TAG}/" $HOME/eks-gitops/magic/development/blue-api/deployment.yaml 
+      - sed -i "s/${oldtag}/${IMAGE_TAG}/" magic/development/blue-api/deployment.yaml 
       - oldtag=$(cat magic/development/pink-api/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
-      - sed -i "s/${oldtag}/${IMAGE_TAG}/" $HOME/eks-gitops/magic/development/pink-api/deployment.yaml 
-      - cd $HOME/eks-gitops/
+      - sed -i "s/${oldtag}/${IMAGE_TAG}/" magic/development/pink-api/deployment.yaml 
       - git add .
       - git commit -a -m "Updating deployment to $IMAGE_TAG tag"
       - git push
