@@ -5,7 +5,9 @@ phases:
     commands:
       - export IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - export ACCOUNT=$(echo $CODEBUILD_BUILD_ARN |cut -f5 -d:)
-      - export REPOSITORY_URI=048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-ew0c2u1ne7ai
+      - export REPOSITORY_URI=048815747800.dkr.ecr.us-east-1.amazonaws.com/examp-examp-793dcbtqqe9j
+      - echo '***** Installing shyaml:'
+      - pip install shyaml
       - echo '***** This is the current env:'
       - printenv
       - echo '***** Logging in to ECR:'
@@ -34,9 +36,12 @@ phases:
       - echo $IMAGE_TAG > code_hash.txt
       - pwd
       - ls
-      - sed -i "s/image: .*/image: $REPOSITORY_URI:$IMAGE_TAG/" magic/development/yellow-api/deployment.yaml 
-      - sed -i "s/image: .*/image: $REPOSITORY_URI:$IMAGE_TAG/" magic/development/blue-api/deployment.yaml 
-      - sed -i "s/image: .*/image: $REPOSITORY_URI:$IMAGE_TAG/" magic/development/pink-api/deployment.yaml
+      - oldtag=$(cat magic/development/yellow-api/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
+      - sed -i "s/${oldtag}/${IMAGE_TAG}/" magic/development/yellow-api/deployment.yaml 
+      - oldtag=$(cat magic/development/blue-api/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
+      - sed -i "s/${oldtag}/${IMAGE_TAG}/" magic/development/blue-api/deployment.yaml 
+      - oldtag=$(cat magic/development/pink-api/deployment.yaml | shyaml get-value spec.template.spec.containers.0.image | cut -f2 -d:)
+      - sed -i "s/${oldtag}/${IMAGE_TAG}/" magic/development/pink-api/deployment.yaml 
       - git add .
       - git commit -a -m "Updating deployment to $IMAGE_TAG tag"
       - git push
