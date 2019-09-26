@@ -30,8 +30,8 @@ phases:
       - docker tag example-api:latest ${REPOSITORY_URI}:${IMAGE_TAG}
       - docker tag example-api:latest ${REPOSITORY_URI}:latest
       - echo '***** Pushing Image:'
-      - docker push ${REPOSITORY_URI:${IMAGE_TAG}
-      - docker push ${REPOSITORY_URI:latest
+      - docker push ${REPOSITORY_URI}:${IMAGE_TAG}
+      - docker push ${REPOSITORY_URI}:latest
       - printf '[{"name":"example-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo $IMAGE_TAG > code_hash.txt
       - pwd
